@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="/assets/css/custom.css">-->
+    <title><%= title %></title>
+</head>
+<style>
+    .table-wrapper {
+        margin-top: 50px;
+    }
+
+    .player-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .add-player-form {
+        margin-top: 50px;
+    }
+</style>
+<body>
+<div class="page-wrapper">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1" ><a href="/">Bullseye</a></span>
+        <a class="float-right" href="/add" title="Add a New Player">Add a Question</a>
+    </nav>
+
+    <div class="container">
+    <% if (message) { %>
+        <p class="text-center text-danger"><%= message %></p>
+    <% } %>
+
+    <% if (problem) { 
+        var url = "http://18.191.226.201:5000/edit/" + problem.Pid%>
+        <form class="add-player-form" action="<%=url%>" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="ProbStat">ProbStat</label>
+                    <textarea class="form-control" name="ProbStat" id="ProbStat" required><%= problem.ProbStat %></textarea>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Input">Input</label>
+                    <textarea class="form-control" name="Input" id="Input"  required><%= problem.Input %> </textarea></div>
+                <div class="form-group col-md-4">
+                    <label for="Output">Output</label>
+                    <textarea class="form-control" name="Output" id="Output"  required><%= problem.Output %></textarea>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Constraints">Constraints</label>
+                    <textarea class="form-control" name="Constraints" id="Constraints" required><%= problem.Constraints %> </textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="timeLimit">timeLimit</label>
+                    <input type="number" class="form-control" name="timeLimit" id="timeLimit" value="<%= problem.timeLimit %>" required>
+                </div>
+
+                 <div class="form-group col-md-4">
+                    <label for="diffLevel">diffLevel</label>
+                    <input type="text" class="form-control" name="diffLevel" id="diffLevel" value="<%= problem.diffLevel %>" required>
+                </div>
+
+                  <div class="form-group col-md-4">
+                    <label for="tags">tags</label>
+                    <input type="text" class="form-control" name="tags" id="tags" value="<%= problem.tags %>" required>
+                </div>
+
+                 <div class="form-group col-md-4">
+                    <label for="author">author</label>
+                    <input value="<%= problem.author %>" type="text" class="form-control" name="author" id="author"  required>
+                </div>
+
+
+            </div>
+
+            <button type="submit" class="btn btn-success float-right">Update Question</button>
+        </form>
+    <% } else { %>
+        <p class="text-center">Question Not Found. Go <a href="/add">here</a> to add questions.</p>
+    <% } %>
+</div>
+</div>
+</body>
+</html>
