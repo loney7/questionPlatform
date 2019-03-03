@@ -2,7 +2,15 @@ const query = require('../database/queries')
 const config = require("../database/config");
 
 module.exports = {
+	
 	Index: async (req, res) => {
+		var user =  req.session.user,
+		userId = req.session.userId;
+	
+		if(userId == null){
+		res.redirect("/login");
+		return;
+	}
 		let db = await config();
 
 		try {
@@ -24,12 +32,29 @@ module.exports = {
 			await db.destroy();
 		}
 	},
+
+	login: function(req, res){
+		var message = '';
+	  res.render('login.ejs',{message: message});
+	},
+
+	signup:  function(req, res){
+		message = '';
+		if(req.method == "POST"){
+		   //post data
+	 
+		} else {
+		   res.render('signup');
+		}
+	 },
+
 	addPlayerPage: (req, res) => {
         return res.render('add-player.ejs', {
             title: 'Question Addition Platform | Add a new player'
             ,message: ''
         });
-    },
+	},
+	
     editPlayerPage: async (req, res) => {
     	let db = await config();
     	try {
